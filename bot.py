@@ -8,7 +8,7 @@ bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(func=lambda message: True)
 def upper(message: Message):
-
+    bot.reply_to(message, message.text.upper())
 
 if __name__=="__main__":
     bot.polling()
