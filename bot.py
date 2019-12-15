@@ -16,15 +16,17 @@ def upper(message: Message):
 #AI mode
 @bot.message_handler(func=lambda message: True)
 def upper(message: Message):
-    request = apiai.ApiAI('053380e328a047f79dc16bc3c739af1d').text_request()
+    request = apiai.ApiAI('053380e328a047f79dc16bc3c739af1d').text_request() 
     request.lang = 'ru'
-    request.session_id = 'Pretty'
-    request.query = message.text
+    request.session_id = 'BatlabAIBot'
+    request.query = update.message.text
     responseJson = json.loads(request.getresponse().read().decode('utf-8'))
     response = responseJson['result']['fulfillment']['speech']
     if response:
-        bot.send_message(message.chat.id, response) 
+        bot.send_message(chat_id=update.message.chat_id, text=response)
+    else:
+        bot.send_message(chat_id=update.message.chat_id, text='Я Вас не совсем понял!')
 
-
+      
 if __name__=="__main__":
     bot.polling()
