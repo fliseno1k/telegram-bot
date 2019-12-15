@@ -16,7 +16,7 @@ def upper(message: Message):
 #AI mode
 @bot.message_handler(func=lambda message: True)
 def upper(message: Message):
-    request = apiai.ApiAI('81e85de2848f404bb9066c1f1b7ff5cf').text_request()
+    request = apiai.ApiAI('053380e328a047f79dc16bc3c739af1d').text_request()
     request.lang = 'ru'
     request.session_id = 'Pretty'
     request.query = message.text
