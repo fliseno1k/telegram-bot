@@ -23,9 +23,9 @@ def upper(message: Message):
     responseJson = json.loads(request.getresponse().read().decode('utf-8'))
     response = responseJson['result']['fulfillment']['speech']
     if response:
-        bot.send_message(chat_id=message.chat_id, text=response)
+        bot.send_message(chat_id=message.chat.id, text=response)
     else:
-        bot.send_message(chat_id=message.chat_id, text='Я Вас не совсем понял!')
+        bot.send_message(chat_id=message.chat.id, text='Я Вас не совсем понял!')
 
       
 if __name__=="__main__":
