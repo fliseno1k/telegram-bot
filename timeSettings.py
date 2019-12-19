@@ -2,6 +2,7 @@ import datetime
 
 #Time difference between server and user
 def time_zone_difference(user_time):
+    user_time = int(user_time)
     server_time = datetime.datetime.now().hour
     difference = 0
 
