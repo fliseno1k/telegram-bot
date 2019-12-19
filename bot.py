@@ -64,26 +64,25 @@ def command_my_id(message):
 #-----------------------------  
 
 def aggre_to_recieve_wishes(callbackData):
-    try: 
-        #Calculate time difference
-        time_difference = timeSettings.time_zone_difference(callbackData.data)
+    #Calculate time difference
+    time_difference = timeSettings.time_zone_difference(callbackData.data)
 
-        #Calculate matrix of times on that server should send messages for current user
-        times = timeSettings.calculate_times_message_send(time_difference)
+    #Calculate matrix of times on that server should send messages for current user
+    times = timeSettings.calculate_times_message_send(time_difference)
 
-        #Add user data into DB
-        DBController.add_user_data(callbackData.message.from_user.first_name, callbackData.message.chat.id, times)
+    #Add user data into DB
+    DBController.add_user_data(callbackData.message.from_user.first_name, callbackData.message.chat.id, times)
 
-        bot.edit_message_text(chat_id=callbackData.message.chat.id, 
-                              message_id=callbackData.message.message_id,
-                              text='Спасибо! Операция выполнена успешно!')
-    
-        bot.send_message(callbackData.message.chat.id ,'Для отмены данной функции введите /wishes и в появившемся сообщении нажмите на кнопку \"Нет\".\nЕсли время было введно неверно, или вы хотите его изменить, выполните команду /wishes заново и введите верные данные.')
-    
-    except Exception:
-        bot.edit_message_text(chat_id=callbackData.message.chat.id, 
-                              message_id=callbackData.message.message_id,
-                              text='Что-то пошло не так!\nПожалуйста, повторите действие позже.\n')
+    bot.edit_message_text(chat_id=callbackData.message.chat.id, 
+                            message_id=callbackData.message.message_id,
+                            text='Спасибо! Операция выполнена успешно!')
+
+    bot.send_message(callbackData.message.chat.id ,'Для отмены данной функции введите /wishes и в появившемся сообщении нажмите на кнопку \"Нет\".\nЕсли время было введно неверно, или вы хотите его изменить, выполните команду /wishes заново и введите верные данные.')
+
+
+    bot.edit_message_text(chat_id=callbackData.message.chat.id, 
+                            message_id=callbackData.message.message_id,
+                            text='Что-то пошло не так!\nПожалуйста, повторите действие позже.\n')
 
 
 def cancel_to_recieve_wishes(callbackData):
