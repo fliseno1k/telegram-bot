@@ -5,6 +5,7 @@ from telebot.types import Message
 
 
 TOKEN = "1001205469:AAF8ZGi1hC5OacAiVyfa0byU9BaAfefFtCw"
+AUTHOR_CHAT_ID = None
 bot = telebot.TeleBot(TOKEN)
 
 
@@ -12,6 +13,15 @@ bot = telebot.TeleBot(TOKEN)
 def upper(message: Message):
     bot.reply_to(message, message.text.upper())'''
 
+#Start command
+@bot.message_handler(commands=['start'])
+def command_hello(message):
+    bot.send_message(message.chat.id, f"""Привет, {message.from_user.first_name}, рад тебя видеть!""") 
+
+#Send chat id to user
+@bot.message_handler(commands=['my_id'])
+def command_my_id(message):
+    bot.send_message(message.chat.id, message.from_user.id)
 
 #AI mode
 @bot.message_handler(func=lambda message: True)
@@ -27,6 +37,10 @@ def upper(message: Message):
     else:
         bot.send_message(chat_id=message.chat.id, text='Я Вас не совсем понял!')
 
+#Send chat id to user
+@bot.message_handler(commands=['my_id'])
+def command_my_id(message):
+    bot.send_message(message.chat.id, message.from_user.id)
       
 if __name__=="__main__":
     bot.polling()
