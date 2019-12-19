@@ -83,7 +83,7 @@ def aggre_to_recieve_wishes(callbackData):
     except Exception:
         bot.edit_message_text(chat_id=callbackData.message.chat.id, 
                               message_id=callbackData.message.message_id,
-                              text='Что-то пошло не так!\nПожалуйста, повторите действие позже.\nError: {Exception}')
+                              text=f'Что-то пошло не так!\nПожалуйста, повторите действие позже.\nError: {Exception}')
 
 
 def cancel_to_recieve_wishes(callbackData):
