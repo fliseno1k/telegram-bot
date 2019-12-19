@@ -72,7 +72,7 @@ def aggre_to_recieve_wishes(callbackData):
         times = timeSettings.calculate_times_message_send(time_difference)
 
         #Add user data into DB
-        DBController.add_user_data(callbackData.message.from_user.first_name, callbackData.message.chat.id, times)
+        '''DBController.add_user_data(callbackData.message.from_user.first_name, callbackData.message.chat.id, times)'''
 
         bot.edit_message_text(chat_id=callbackData.message.chat.id, 
                               message_id=callbackData.message.message_id,
