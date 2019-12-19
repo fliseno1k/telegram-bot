@@ -40,7 +40,3 @@ def delete_user_data(chat_id):
 
     connection.commit() 
     cursor.close()
-
-
-
-delete_user_data(457618671)
