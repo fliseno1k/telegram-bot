@@ -1,6 +1,8 @@
 import telebot 
 import apiai, json
 import datetime
+import timeSettings
+import DBController
 
 from telebot.types import Message
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -61,23 +63,42 @@ def command_my_id(message):
 #------CALLBACK-BACKEND-------
 #-----------------------------  
 
+def aggre_to_recieve_wishes(callbackData):
+    try: 
+        #Calculate time difference
+        time_difference = timeSettings.time_zone_difference(callbackData.data)
 
-def aggreToRecieveWishes(callbackData):
-    bot.edit_message_text(chat_id=callbackData.message.chat.id, 
+        #Calculate matrix of times on that server should send messages for current user
+        times = timeSettings.calculate_times_message_send(time_difference)
+
+        #Add user data into DB
+        DBController.add_user_data(callbackData.message.from_user.first_name, callbackData.message.chat.id, times)
+
+        bot.edit_message_text(chat_id=callbackData.message.chat.id, 
                               message_id=callbackData.message.message_id,
                               text='Спасибо! Операция выполнена успешно!')
-   
-    bot.send_message(callbackData.message.chat.id ,'''Для отмены данной функции введите /wishes и в появившемся 
-                                                сообщении нажмите на кнопку \"Нет\".\nЕсли врем было введно неверно, или вы хотите его изменить, 
-                                                выполните команду /wishes заново и введите верные данные.''')
-    #time_zone_difference(callbackData.message.chat.id, callbackData.data, datetime.datetime.now().hour)
+    
+        bot.send_message(callbackData.message.chat.id ,'Для отмены данной функции введите /wishes и в появившемся сообщении нажмите на кнопку \"Нет\".\nЕсли врем было введно неверно, или вы хотите его изменить, выполните команду /wishes заново и введите верные данные.')
+    
+    except Exception:
+        bot.edit_message_text(chat_id=callbackData.message.chat.id, 
+                              message_id=callbackData.message.message_id,
+                              text='Что-то пошло не так!\nПожалуйста, повторите действие позже.')
 
-def cancelToRecieveWishes(callbackData):
-    bot.edit_message_text(chat_id=callbackData.message.chat.id, 
-                          message_id=callbackData.message.message_id,
-                          text='Жаль, если передумаете, функция доступна по команде /wishes')
 
-def createTimeZoneKeyboard(callbackData):
+def cancel_to_recieve_wishes(callbackData):
+    try:
+        DBController.delete_user_data(callbackData.message.chat.id)
+
+        bot.edit_message_text(chat_id=callbackData.message.chat.id, 
+                            message_id=callbackData.message.message_id,
+                            text='Жаль, если вы передумаете, функция доступна по команде /wishes')
+    except Exception:
+        bot.edit_message_text(chat_id=callbackData.message.chat.id, 
+                              message_id=callbackData.message.message_id,
+                              text='Что-то пошло не так!\nПожалуйста, повторите действие позже.')
+
+def create_time_zone_keyboard(callbackData):
     keyboard_time_zones = InlineKeyboardMarkup(row_width=6)
         
     keyboard_time_zones.add(InlineKeyboardButton(text='0',callback_data='0'),
@@ -114,13 +135,13 @@ def createTimeZoneKeyboard(callbackData):
                             reply_markup=keyboard_time_zones)
 
 @bot.callback_query_handler(func=lambda clbk: clbk.data)
-def callbackQuery(clbk):
+def callback_query(clbk):
     if clbk.data == 'Да':
-        createTimeZoneKeyboard(clbk)
+        create_time_zone_keyboard(clbk)
     elif clbk.data in [str(x) for x in range(24)]:
-        aggreToRecieveWishes(clbk)   
+        aggre_to_recieve_wishes(clbk)   
     elif clbk.data == 'Нет':
-        cancelToRecieveWishes(clbk)
+        cancel_to_recieve_wishes(clbk)
 
 
 if __name__=="__main__":
