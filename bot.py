@@ -72,13 +72,13 @@ def aggre_to_recieve_wishes(callbackData):
         times = timeSettings.calculate_times_message_send(time_difference)
 
         #Add user data into DB
-        '''DBController.add_user_data(callbackData.message.from_user.first_name, callbackData.message.chat.id, times)'''
+        DBController.add_user_data(callbackData.message.from_user.first_name, callbackData.message.chat.id, times)
 
         bot.edit_message_text(chat_id=callbackData.message.chat.id, 
                               message_id=callbackData.message.message_id,
                               text='Спасибо! Операция выполнена успешно!')
     
-        bot.send_message(callbackData.message.chat.id ,'Для отмены данной функции введите /wishes и в появившемся сообщении нажмите на кнопку \"Нет\".\nЕсли врем было введно неверно, или вы хотите его изменить, выполните команду /wishes заново и введите верные данные.')
+        bot.send_message(callbackData.message.chat.id ,'Для отмены данной функции введите /wishes и в появившемся сообщении нажмите на кнопку \"Нет\".\nЕсли время было введно неверно, или вы хотите его изменить, выполните команду /wishes заново и введите верные данные.')
     
     except Exception:
         bot.edit_message_text(chat_id=callbackData.message.chat.id, 
