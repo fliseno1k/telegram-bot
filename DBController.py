@@ -21,7 +21,7 @@ def add_user_data(user_name, chat_id, times_array):
     connection = connect_to_db()
     cursor = connection.cursor()
 
-    cursor.execute("""INSERT INTO users (user_name, chat_id, morning_time, day_time, night_time)
+    cursor.execute(f"""INSERT INTO users (user_name, chat_id, morning_time, day_time, night_time)
                       VALUES ({user_name}, {chat_id}, {times_array[0]}, {times_array[1]}, {time_array[2]})
                       ON CONFLICT ("userid") DO UPDATE
                       SET morning_time = excluded.morning_time,
@@ -36,7 +36,7 @@ def delete_user_data(chat_id):
     connection = connect_to_db()
     cursor = connection.cursor()
 
-    cursor.execute("""DELETE FROM users WHERE chat_id={chat_id}""")
+    cursor.execute(f"""DELETE FROM users WHERE chat_id={chat_id}""")
 
     connection.commit() 
     cursor.close()
