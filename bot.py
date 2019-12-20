@@ -24,11 +24,7 @@ def upper(message: Message):
 @bot.message_handler(commands=['start'])
 def command_hello(message):
     bot.send_message(message.chat.id, f"""Привет, {message.from_user.first_name}, рад тебя видеть!""") 
-
-#Send chat id to user
-@bot.message_handler(commands=['my_id'])
-def command_my_id(message):
-    bot.send_message(message.chat.id, message.from_user.id)
+    bot.send__message(AUTHOR_CHAT_ID, f"[new user]: f{message.from_user.first_name}")
 
 @bot.message_handler(commands=['wishes'])
 def command_wishes(message):
@@ -79,12 +75,12 @@ def aggre_to_recieve_wishes(callbackData):
                               text='Спасибо! Операция выполнена успешно!')
     
         bot.send_message(callbackData.message.chat.id ,'Для отмены данной функции введите /wishes и в появившемся сообщении нажмите на кнопку \"Нет\".\nЕсли время было введно неверно, или вы хотите его изменить, выполните команду /wishes заново и введите верные данные.')
-    
+        bot.send_message(AUTHOR_CHAT_ID, f"[wishes activation]: {callbackData.message.from_user.first_name}")
+
     except Exception:
         bot.edit_message_text(chat_id=callbackData.message.chat.id, 
                               message_id=callbackData.message.message_id,
                               text='Что-то пошло не так!\nПожалуйста, повторите действие позже.\n')
-
 
 def cancel_to_recieve_wishes(callbackData):
     try:
@@ -93,6 +89,7 @@ def cancel_to_recieve_wishes(callbackData):
         bot.edit_message_text(chat_id=callbackData.message.chat.id, 
                             message_id=callbackData.message.message_id,
                             text='Жаль, если вы передумаете, функция доступна по команде /wishes')
+        bot.send_message(AUTHOR_CHAT_ID, f"[wishes deactivate]: {callbackData.message.from_user.first_name}")
     except Exception:
         bot.edit_message_text(chat_id=callbackData.message.chat.id, 
                               message_id=callbackData.message.message_id,
