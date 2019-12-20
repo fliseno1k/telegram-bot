@@ -38,6 +38,7 @@ def send_wishes():
                 bot.send_message(userid[0] , wishes.good_night_wishes[random.randint(0, len(wishes.good_night_wishes)-1)]) 
             except:
                 DBController.delete_user_data(userid[0]) 
+    
     cursor.close() 
     connection.commit()  
 
