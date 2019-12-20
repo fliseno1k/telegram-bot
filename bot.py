@@ -3,12 +3,13 @@ import apiai, json
 import datetime
 import timeSettings
 import DBController
+import data  
 
 from telebot.types import Message
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-TOKEN = "1001205469:AAF8ZGi1hC5OacAiVyfa0byU9BaAfefFtCw"
-AUTHOR_CHAT_ID = 457618671
+TOKEN = data.TOKEN
+AUTHOR_CHAT_ID = data.AUTHOR_CHAT_ID
 bot = telebot.TeleBot(TOKEN)
 
 

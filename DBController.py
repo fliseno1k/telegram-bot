@@ -1,11 +1,12 @@
 import psycopg2
+import data  
 
 def connect_to_db():
-    connection = psycopg2.connect(user='uvddpqdceppasb',
-                                password='4e130ef2da468e7125a52c52f064a0859473974a775ec5fe20f433b5b893d326',
-                                host='ec2-46-137-187-23.eu-west-1.compute.amazonaws.com',
-                                port = "5432",
-                                database='d18kjd71r1b36b')
+    connection = psycopg2.connect(user=f'{data.USER}',
+                                password=f'{data.PASSWORD}',
+                                host=f'{data.HOST}',
+                                port=f'{data.PORT}',
+                                database=f'{data.DATABASE}')
 
     '''cursor.execute("""CREATE TABLE users (id serial PRIMARY KEY,
                                         user_name VARCHAR(50) NOT NULL,
@@ -40,11 +41,3 @@ def delete_user_data(chat_id):
 
     connection.commit() 
     cursor.close()
-
-'''
-connection = connect_to_db()
-cursor = connection.cursor()
-cursor.execute("""SELECT * FROM users""")
-for i in cursor:
-    print(i)
-'''
