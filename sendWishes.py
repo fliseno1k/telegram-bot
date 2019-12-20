@@ -17,21 +17,21 @@ def send_wishes():
 
     hour = datetime.datetime.now().hour  
 
-    cursor.execute(f"""SELECT userid FROM users WHERE morning_time={hour}""")
+    cursor.execute(f"""SELECT user_id FROM users WHERE morning_time={hour}""")
     for userid in cursor:
         if userid:
             try:
                 bot.send_message(userid[0] , wishes.good_morning_wishes[random.randint(0, len(wishes.good_morning_wishes)-1)])
             except Exception:
                 DBController.delete_user_data(userid[0])
-    cursor.execute(f"""SELECT userid FROM users WHERE day_time={hour}""")        
+    cursor.execute(f"""SELECT user_id FROM users WHERE day_time={hour}""")        
     for userid in cursor:
         if userid:
             try:
                 bot.send_message(userid[0] , wishes.motivated_quotes[random.randint(0, len(wishes.motivated_quotes)-1)])
             except:
                 DBController.delete_user_data(userid[0])
-    cursor.execute(f"""SELECT userid FROM users WHERE night_time={hour}""")
+    cursor.execute(f"""SELECT user_id FROM users WHERE night_time={hour}""")
     for userid in cursor:
         if userid:
             try:

@@ -40,3 +40,10 @@ def delete_user_data(chat_id):
 
     connection.commit() 
     cursor.close()
+
+
+connection = connect_to_db()
+cursor = connection.cursor()
+cursor.execute("""SELECT * FROM users""")
+for i in cursor:
+    print(i)
