@@ -2,15 +2,8 @@ import datetime
 import random 
 import wishes
 import DBController
-import apscheduler
-
 from bot import bot
-from apscheduler.schedulers.blocking import BlockingScheduler
 
-
-sched = BlockingScheduler()
-
-@sched.scheduled_job('interval', minutes=60)
 def send_wishes():
     connection = DBController.connect_to_db()
     cursor = connection.cursor()
@@ -43,4 +36,4 @@ def send_wishes():
     connection.commit()  
 
 if __name__=="__main__":
-    sched.start()
+    send_wishes()
