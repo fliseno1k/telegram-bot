@@ -2,11 +2,11 @@ import psycopg2
 import data  
 
 def connect_to_db():
-    connection = psycopg2.connect(user=f'{data.USER}',
-                                password=f'{data.PASSWORD}',
-                                host=f'{data.HOST}',
-                                port=f'{data.PORT}',
-                                database=f'{data.DATABASE}')
+    connection = psycopg2.connect(user=data.USER,
+                                password=data.PASSWORD,
+                                host=data.HOST,
+                                port=data.PORT,
+                                database=data.DATABASE)
 
     '''cursor.execute("""CREATE TABLE users (id serial PRIMARY KEY,
                                         user_name VARCHAR(50) NOT NULL,
