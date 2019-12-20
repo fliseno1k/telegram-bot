@@ -13,15 +13,10 @@ AUTHOR_CHAT_ID = data.AUTHOR_CHAT_ID
 bot = telebot.TeleBot(TOKEN)
 
 
-'''@bot.message_handler(func=lambda message: True)
-def upper(message: Message):
-    bot.reply_to(message, message.text.upper())'''
+#-----------------------------  
+#-----------COMANDS-----------
+#-----------------------------  
 
-#------------------
-#------COMANDS-----
-#------------------
-
-#Start command
 @bot.message_handler(commands=['start'])
 def command_hello(message):
     bot.send_message(message.chat.id, f"""Привет, {message.from_user.first_name}, рад тебя видеть!""") 
@@ -36,9 +31,8 @@ def command_wishes(message):
 
     bot.send_message(message.chat.id, 'Хотите получать пожелания от бота?', reply_markup=keyboard)
 
-#AI mode
 @bot.message_handler(func=lambda message: True)
-def upper(message: Message):
+def chat_api(message: Message):
     request = apiai.ApiAI(data.CHAT_API).text_request() 
     request.lang = 'ru' 
     request.session_id = 'Pretty' 
@@ -50,7 +44,6 @@ def upper(message: Message):
     else:
         bot.send_message(chat_id=message.chat.id, text='Я Вас не совсем понял!')
 
-#Send chat id to user
 @bot.message_handler(commands=['my_id'])
 def command_my_id(message):
     bot.send_message(message.chat.id, message.from_user.id)
