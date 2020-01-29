@@ -11,7 +11,7 @@ def connect_to_db():
     '''cursor.execute("""CREATE TABLE users (id serial PRIMARY KEY,
                                         user_name VARCHAR(50) NOT NULL,
                                         chat_id INTEGER UNIQUE NOT NULL,
-                                        morning_time INEGER,
+                                        morning_time INTEGER,
                                         day_time INTEGER,
                                         night_time INTEGER);""")'''
     return connection                               
